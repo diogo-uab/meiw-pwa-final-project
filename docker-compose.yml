@@ -1,0 +1,62 @@
+
+services:
+  nginx:
+    container_name: nginx
+    restart: unless-stopped
+    pull_policy: build
+    build:
+      context: ./
+      dockerfile: ./nginx/Dockerfile
+    ports:
+      - "${PWA_NGINX__PORT:-80}:80"
+    networks:
+      - local
+    env_file:
+      - stack.env
+
+  backend:
+    container_name: backend
+    restart: unless-stopped
+    pull_policy: build
+    build:
+      context: ./pwa-blog/
+      dockerfile: ./backend/Dockerfile
+    environment:
+      - TZ=Europe/Lisbon
+    env_file:
+      - stack.env
+    networks:
+      - local
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+      - mongodb-config:/data/configdb
+    networks:
+      - local
+
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/
+      ME_CONFIG_BASICAUTH: false
+      ME_CONFIG_SITE_BASEURL: /mongoadmin
+    networks:
+      - local
+
+networks:
+  local:
+    driver: bridge
+
+volumes:
+  mongodb-data:
+  mongodb-config:
