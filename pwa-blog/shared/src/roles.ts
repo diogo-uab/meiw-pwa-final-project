@@ -22,9 +22,9 @@ export const ROLES_LIST = [Role.User, Role.Admin, Role.Root] as const;
  * e.g A user with `Role.Admin` has both `Role.Admin` and `Role.User`
  */
 export const includesRole = (role: Role, targetRole: Role): boolean => {
-  const index = ROLES_LIST.indexOf(role);
+  const index = ROLES_LIST.indexOf(targetRole);
   if (index === -1) return false;
   return ROLES_LIST
     .slice(index, ROLES_LIST.length)
-    .includes(targetRole);
+    .includes(role);
 };

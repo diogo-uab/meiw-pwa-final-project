@@ -8,3 +8,6 @@ export const CreateBlogCommentDtoSchema = BlogCommentSchema.omit({
   updatedAt: true,
 });
 export type CreateBlogCommentDtoType = z.infer<typeof CreateBlogCommentDtoSchema>;
+
+export const UpdateBlogCommentDtoSchema = CreateBlogCommentDtoSchema;
+export type UpdateBlogCommentDtoType = z.infer<typeof UpdateBlogCommentDtoSchema>;

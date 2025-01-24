@@ -6,8 +6,9 @@ export * from './dto/auth/register.dto';
 export * from './dto/auth/auth-response.dto';
 export * from './dto/auth/refresh-token.dto';
 export * from './dto/blog-post/create-blog-post.dto';
+export * from './dto/blog-post/update-blog-post.dto';
 export * from './dto/blog-post/blog-post-response.dto';
-export * from './dto/blog-comment/create-blog-comment.dto';
+export * from './dto/blog-comment/create-update-blog-comment.dto';
 export * from './dto/blog-comment/blog-comment-response.dto';
 
 /* --------------------------------- Schemas -------------------------------- */
