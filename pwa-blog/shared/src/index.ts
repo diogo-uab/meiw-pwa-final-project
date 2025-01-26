@@ -1,5 +1,7 @@
 /* ---------------------------------- DTOs ---------------------------------- */
 export * from './dto/user/user.dto';
+export * from './dto/user/update-user.dto';
+export * from './dto/user/create-user.dto';
 export * from './dto/user/verify-available-email.dto';
 export * from './dto/auth/login.dto';
 export * from './dto/auth/register.dto';
