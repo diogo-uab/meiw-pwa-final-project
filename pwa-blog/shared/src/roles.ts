@@ -6,7 +6,6 @@ import { z } from 'zod';
 export enum Role {
   User = 'user',
   Admin = 'admin',
-  Root = 'root',
 }
 
 export const RoleSchema = z.nativeEnum(Role);
@@ -14,7 +13,7 @@ export const RoleSchema = z.nativeEnum(Role);
 /**
  * List of ˋRolesˋ ordered from least privileged to most privileged.
  */
-export const ROLES_LIST = [Role.User, Role.Admin, Role.Root] as const;
+export const ROLES_LIST = [Role.User, Role.Admin] as const;
 
 /**
  * Returns a `boolean` indicating if `role` includes the target `targetRole`.
