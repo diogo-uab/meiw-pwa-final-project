@@ -17,4 +17,13 @@ export const config = {
     passwordSaltOrRounds:
       Number(process.env.PWA_BACKEND__PASSWORD_SALT_ROUNDS) || 10,
   },
+  seed: {
+    initialAdminUser: {
+      name: process.env.PWA_BACKEND_ADMIN_USER_NAME || 'PWA Blog',
+      email:
+        process.env.PWA_BACKEND_ADMIN_USER_EMAIL ||
+        'pwa-blog-admin@example.com',
+      password: process.env.PWA_BACKEND_ADMIN_USER_PASSWORD || 'password',
+    },
+  },
 } as const;
