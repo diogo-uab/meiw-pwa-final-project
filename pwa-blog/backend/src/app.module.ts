@@ -8,6 +8,7 @@ import { HTTPLoggerMiddleware } from './middleware/http-logger.middleware';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { BlogPostModule } from './blog-post/blog-post.module';
+import { BlogCommentModule } from './blog-comment/blog-comment.module';
 import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
 
 @Module({
@@ -17,6 +18,7 @@ import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
     AuthModule,
     UserModule,
     BlogPostModule,
+    BlogCommentModule,
   ],
   providers: [
     { provide: APP_PIPE, useClass: ZodValidationPipe },
