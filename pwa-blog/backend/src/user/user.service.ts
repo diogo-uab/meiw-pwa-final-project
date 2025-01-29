@@ -5,6 +5,7 @@ import {
   Injectable,
   NotFoundException,
   ConflictException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { EventEmitter2 } from '@nestjs/event-emitter';
@@ -13,6 +14,8 @@ import { config } from '../config/env';
 import { User, UserDocument } from './schemas/user.schema';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
+import { UpdateUserPasswordDto } from './dto/update-user-password.dto';
 import { UserDeletedEvent } from './events/user-deleted.event';
 
 @Injectable()
@@ -39,6 +42,31 @@ export class UserService {
     if (!user)
       throw new NotFoundException('User for the given email not found');
     return user;
+  }
+
+  async updateUserProfile(
+    user: UserDocument,
+    updateUserProfileDto: UpdateUserProfileDto,
+  ): Promise<UserDocument> {
+    user.set(updateUserProfileDto);
+    return user.save();
+  }
+
+  async updateUserPassword(
+    user: UserDocument,
+    updateUserPasswordDto: UpdateUserPasswordDto,
+  ) {
+    if (
+      !(await this.comparePassword(
+        updateUserPasswordDto.currentPassword,
+        user.password,
+      ))
+    )
+      throw new ForbiddenException('Current password is incorrect');
+
+    await user.updateOne({
+      password: await this.hashPassword(updateUserPasswordDto.newPassword),
+    });
   }
 
   async create(user: CreateUserDto): Promise<UserDocument> {
@@ -68,8 +96,8 @@ export class UserService {
       );
     }
 
-    await user.updateOne(updateUserDto);
-    return user;
+    user.set(updateUserDto);
+    return user.save();
   }
 
   async delete(id: string) {

@@ -23,6 +23,8 @@ import {
 import { IdDto } from '../shared/dto/id.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
+import { UpdateUserPasswordDto } from './dto/update-user-password.dto';
 
 @Controller('user')
 export class UserController {
@@ -33,6 +35,26 @@ export class UserController {
   @ZodSerializerDto(UserDto)
   getMyUserInfo(@CurrentUser() user: UserDocument) {
     return user;
+  }
+
+  @Post('profile')
+  @Auth()
+  @ZodSerializerDto(UserDto)
+  updateUserProfile(
+    @CurrentUser() user: UserDocument,
+    @Body() updateUserProfileDto: UpdateUserProfileDto,
+  ) {
+    return this.userService.updateUserProfile(user, updateUserProfileDto);
+  }
+
+  @Post('password')
+  @Auth()
+  async updateUserPassword(
+    @CurrentUser() user: UserDocument,
+    @Body() updateUserPasswordDto: UpdateUserPasswordDto,
+  ) {
+    await this.userService.updateUserPassword(user, updateUserPasswordDto);
+    return { success: true };
   }
 
   @Post('verify-available-email')
