@@ -7,6 +7,7 @@ import Button from 'primevue/button';
 import Avatar from 'primevue/avatar';
 import Logo from './logo.vue';
 import { useAuthStore } from '../stores/auth.store';
+import { useWindowScroll } from '../hooks/use-window-scroll';
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -58,6 +59,12 @@ const items = computed<MenuItem[]>(() => [
 const toggleMenu = (event: MouseEvent) => {
   menu.value.toggle(event);
 };
+
+// Hide the menu on scroll
+useWindowScroll(() => {
+  if (!menu.value.overlayVisible) return;
+  menu.value.hide();
+});
 </script>
 
 <template>
