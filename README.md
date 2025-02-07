@@ -12,7 +12,7 @@ Start by cloning (or downloading) this repo (`git clone git@github.com:diogo-uab
 * Install [Docker Compose](https://docs.docker.com/compose/)
 * Change directory to the root of the project (`cd path/to/meiw-pwa-final-project`)
 * Create a `stack.env` file in the root directory, with the same content content as the `stack.env.example` (or simply rename `stack.env.example` to `stack.env`)
-  * For local use, the essential variable to have on `stack.env` (it's present on `stack.env.example`) is `PWA_BACKEND__MONGODB_CONNECTION_URL=mongodb://mongo:27017/pwa-blog`. It uses the host from MongoDB container.
+  * For local use, the essential variable to have on `stack.env` (it's present on `stack.env.example`) is `PWA_BACKEND__MONGODB_CONNECTION_URL=mongodb://mongodb:27017/pwa-blog`. It uses the host from MongoDB container.
 * Example run command: `docker-compose -f 'docker-compose.yml' up -d --build`
 
 ### Run without Docker

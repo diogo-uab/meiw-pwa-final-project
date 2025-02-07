@@ -28,8 +28,8 @@ services:
     networks:
       - local
 
-  mongo:
-    container_name: mongo
+  mongodb:
+    container_name: mongodb
     image: mongo
     restart: unless-stopped
     pull_policy: build
