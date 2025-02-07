@@ -19,11 +19,11 @@ export const config = {
   },
   seed: {
     initialAdminUser: {
-      name: process.env.PWA_BACKEND_ADMIN_USER_NAME || 'PWA Blog',
+      name: process.env.PWA_BACKEND__ADMIN_USER_NAME || 'PWA Blog',
       email:
-        process.env.PWA_BACKEND_ADMIN_USER_EMAIL ||
+        process.env.PWA_BACKEND__ADMIN_USER_EMAIL ||
         'pwa-blog-admin@example.com',
-      password: process.env.PWA_BACKEND_ADMIN_USER_PASSWORD || 'password',
+      password: process.env.PWA_BACKEND__ADMIN_USER_PASSWORD || 'password',
     },
   },
 } as const;
