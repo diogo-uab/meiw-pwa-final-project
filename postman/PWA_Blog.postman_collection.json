@@ -1,0 +1,585 @@
+{
+	"info": {
+		"_postman_id": "c2705e60-5afe-4031-a76a-3b3953128879",
+		"name": "PWA Blog",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4573750"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let body = null;\r",
+									"try {\r",
+									"    body = pm.response.json();\r",
+									"} catch {\r",
+									"    console.log('Invalid JSON response');\r",
+									"}\r",
+									"\r",
+									"if (body.accessToken)\r",
+									"    pm.environment.set(\"ACCESS_TOKEN\", body.accessToken);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"xdimota7x@gmail.com\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/auth/login",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"User Name\",\r\n    \"email\": \"email@example.com\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/auth/register",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"packages": {},
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzhkYjM3MWEyY2Q0MTkzMGE2M2JiYzgiLCJlbWFpbCI6InhkaW1vdGE3eEBnbWFpbC5jb20iLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzM3NTY1NTc3LCJleHAiOjE3Mzc1NjkxNzd9.yXWNooDG72-1OqcrmLQHcyIhw1MIDGQP7hQhsgu-bXs\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/auth/refresh",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get my info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/user/me",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"user",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/user",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"a@a.com\",\r\n    \"name\": \"John Doe\",\r\n    \"password\": \"password\",\r\n    \"role\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/user",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"a@a.com\",\r\n    \"name\": \"John Doe\",\r\n    \"role\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/user/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "678f04e2ce9a4eaa5e0c30b6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/user/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "678f04e2ce9a4eaa5e0c30b6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Available Email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"a@a.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/user/verify-available-email",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"user",
+								"verify-available-email"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Blog Posts",
+			"item": [
+				{
+					"name": "Get all Posts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/blog-post",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"blog-post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Post by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/blog-post/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"blog-post",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "678f04e2ce9a4eaa5e0c30b6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Blog Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Some Blog Post\",\r\n    \"description\": \"This is an example description of a blog post\",\r\n    \"body\": \"This is the main content body of the blog post\",\r\n    \"author\": \"678db371a2cd41930a63bbc8\"\r\n    // \"author\": { \"_id\": \"678db371a2cd41930a63bbc8\" }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/blog-post",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"blog-post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Blog Post",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Some Blog Post\",\r\n    \"description\": \"This is an example description of a blog post\",\r\n    \"body\": \"This is the main content body of the blog post\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/blog-post/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"blog-post",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "678f04e2ce9a4eaa5e0c30b6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Blog Post",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/blog-post/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"blog-post",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "678f04e2ce9a4eaa5e0c30b6"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Blog Comments",
+			"item": [
+				{
+					"name": "Get All Comments by Post ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/blog-comment/post/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"blog-comment",
+								"post",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "678f04e2ce9a4eaa5e0c30b6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Comments by User ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/blog-comment/user/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"blog-comment",
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "678f04e2ce9a4eaa5e0c30b6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Comment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"post\": \"678f04e2ce9a4eaa5e0c30b6\",\r\n    \"content\": \"Comment content\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/blog-comment",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"blog-comment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Comment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\": \"Comment content\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/blog-comment/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"blog-comment",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "678f04e2ce9a4eaa5e0c30b6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Comment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/blog-comment/:id",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"blog-comment",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "678f04e2ce9a4eaa5e0c30b6"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{ACCESS_TOKEN}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
