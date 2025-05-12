@@ -13,6 +13,7 @@ import { Role } from '@pwa/shared';
 import { BlogPostService } from './blog-post.service';
 import { Auth } from '../auth/decorators/auth.decorator';
 import { IdDto } from '../shared/dto/id.dto';
+import { LocationQuerySchema } from './dto/location.dto';
 import { CreateBlogPostDto } from './dto/create-blog-post.dto';
 import { UpdateBlogPostDto } from './dto/update-blog-post.dto';
 import { BlogPostResponseDto } from './dto/blog-post-response.dto';
@@ -23,8 +24,9 @@ export class BlogPostController {
 
   @Get()
   @ZodSerializerDto(BlogPostResponseDto)
-  getAll(@Query('search') search?: string) {
-    return this.blogPostService.getAll(search);
+  getAll(@Query('search') search?: string, @Query() locationQuery?: unknown) {
+    const { data: location } = LocationQuerySchema.safeParse(locationQuery);
+    return this.blogPostService.getAll(search, location);
   }
 
   @Get(':id')

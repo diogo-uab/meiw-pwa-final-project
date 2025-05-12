@@ -4,6 +4,7 @@ import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { Model } from 'mongoose';
 import { CreateBlogPostDtoType } from '@pwa/shared';
 import { BlogPost, BlogPostDocument } from './schemas/blog-post.schema';
+import { LocationQueryDto } from './dto/location.dto';
 import { UpdateBlogPostDto } from './dto/update-blog-post.dto';
 import { UserDeletedEvent } from '../user/events/user-deleted.event';
 import { BlogPostDeletedEvent } from './events/blog-post-deleted.event';
@@ -17,20 +18,43 @@ export class BlogPostService {
     @InjectModel(BlogPost.name) private blogPostModel: Model<BlogPost>,
   ) {}
 
-  getAll(search?: string): Promise<BlogPostDocument[]> {
+  getAll(
+    search?: string,
+    locationSearch?: LocationQueryDto,
+  ): Promise<BlogPostDocument[]> {
     const searchExpression = search ? new RegExp(search, 'i') : null;
+    const searchQuery = searchExpression
+      ? {
+          $or: [
+            { body: searchExpression },
+            { title: searchExpression },
+            { description: searchExpression },
+          ],
+        }
+      : {};
+
+    const locationQuery = locationSearch
+      ? {
+          location: {
+            $near: {
+              $maxDistance: locationSearch.distance * 1000, // km to meters
+              $geometry: {
+                type: 'Point',
+                coordinates: [
+                  locationSearch.longitude,
+                  locationSearch.latitude,
+                ],
+              },
+            },
+          },
+        }
+      : {};
+
     return this.blogPostModel
-      .find(
-        searchExpression
-          ? {
-              $or: [
-                { body: searchExpression },
-                { title: searchExpression },
-                { description: searchExpression },
-              ],
-            }
-          : {},
-      )
+      .find({
+        ...searchQuery,
+        ...locationQuery,
+      })
       .sort({ createdAt: 'desc' })
       .populate('author');
   }
