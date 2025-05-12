@@ -17,6 +17,7 @@ export * from './dto/blog-comment/blog-comment-response.dto';
 
 /* --------------------------------- Schemas -------------------------------- */
 export * from './schemas/user.schema';
+export * from './schemas/location.schema';
 export * from './schemas/blog-post.schema';
 export * from './schemas/blog-comment.schema';
 export * from './schemas/utils';
