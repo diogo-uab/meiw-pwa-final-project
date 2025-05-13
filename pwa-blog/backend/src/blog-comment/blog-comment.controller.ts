@@ -30,12 +30,14 @@ export class BlogCommentController {
   }
 
   @Get('post/:id')
+  @ZodSerializerDto(BlogCommentResponseDto)
   getAllByPostId(@Param() params: IdDto) {
     return this.blogCommentService.getAllByPostId(params.id);
   }
 
   @Auth()
   @Get('user/:id')
+  @ZodSerializerDto(BlogCommentResponseDto)
   getAllByUserId(@Param() params: IdDto) {
     return this.blogCommentService.getAllByUserId(params.id);
   }
