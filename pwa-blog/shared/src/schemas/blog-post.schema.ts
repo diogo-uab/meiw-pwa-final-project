@@ -14,7 +14,8 @@ export const BlogPostSchema = z.object({
       data && typeof data === 'object' &&
       'toObject' in data && typeof data.toObject === 'function'
     ) {
-      return data.toObject();
+      const obj = data.toObject();
+      return (!obj || Object.keys(obj).length === 0) ? null : obj;
     }
     return data;
   }, LocationSchema.nullish().default(null)),
