@@ -52,8 +52,17 @@ export class BlogPostService {
 
     return this.blogPostModel
       .find({
-        ...searchQuery,
-        ...locationQuery,
+        $and: [
+          searchQuery,
+          locationQuery,
+          {
+            $or: [
+              { publishDate: null },
+              { publishDate: { $exists: false } },
+              { publishDate: { $lte: new Date() } },
+            ],
+          },
+        ],
       })
       .sort({ createdAt: 'desc' })
       .populate('author');
