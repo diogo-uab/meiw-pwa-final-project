@@ -38,6 +38,9 @@ export class BlogPost {
 
   createdAt: Date;
   udpatedAt: Date;
+
+  @Prop({ type: Date })
+  publishDate: Date | null;
 }
 
 export const BlogPostSchema = SchemaFactory.createForClass(BlogPost);
