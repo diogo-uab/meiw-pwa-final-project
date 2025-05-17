@@ -48,6 +48,15 @@ export class UserService {
     user: UserDocument,
     updateUserProfileDto: UpdateUserProfileDto,
   ): Promise<UserDocument> {
+    if (
+      user.email !== updateUserProfileDto.email &&
+      !(await this.verifyAvailableEmail({ email: updateUserProfileDto.email }))
+    ) {
+      throw new ConflictException(
+        'User with the provided email already exists',
+      );
+    }
+
     user.set(updateUserProfileDto);
     return user.save();
   }
