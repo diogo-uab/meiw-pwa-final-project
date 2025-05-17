@@ -21,6 +21,7 @@ export const BlogPostSchema = z.object({
   }, LocationSchema.nullish().default(null)),
   createdAt: TimestampSchema,
   updatedAt: TimestampSchema.optional(),
+  publishDate: TimestampSchema.nullish().default(null),
 });
 
 export type BlogPostType = z.infer<typeof BlogPostSchema>;
