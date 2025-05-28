@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { Model } from 'mongoose';
 import { CreateBlogPostDtoType } from '@pwa/shared';
+import { UserService } from 'src/user/user.service';
 import { BlogPost, BlogPostDocument } from './schemas/blog-post.schema';
 import { LocationQueryDto } from './dto/location.dto';
 import { UpdateBlogPostDto } from './dto/update-blog-post.dto';
@@ -14,6 +15,7 @@ export class BlogPostService {
   private readonly logger = new Logger(BlogPostService.name);
 
   constructor(
+    private userService: UserService,
     private eventEmitter: EventEmitter2,
     @InjectModel(BlogPost.name) private blogPostModel: Model<BlogPost>,
   ) {}
@@ -78,8 +80,16 @@ export class BlogPostService {
   async create(
     createPostDto: CreateBlogPostDtoType,
   ): Promise<BlogPostDocument> {
+    // Validates `author` user exists, throws `NotFoundException` if it doesn't.
+    await this.userService.getById(
+      typeof createPostDto.author === 'string'
+        ? createPostDto.author
+        : createPostDto.author._id,
+    );
+
     const post = await this.blogPostModel.create(createPostDto);
     await post.populate('author');
+    this.logger.log(`Created BlogPost(id: ${post.id}, title: "${post.title}")`);
     return post;
   }
 
