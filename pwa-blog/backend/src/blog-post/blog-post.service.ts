@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { Model } from 'mongoose';
 import { CreateBlogPostDtoType } from '@pwa/shared';
-import { UserService } from 'src/user/user.service';
+import { UserService } from '../user/user.service';
 import { BlogPost, BlogPostDocument } from './schemas/blog-post.schema';
 import { LocationQueryDto } from './dto/location.dto';
 import { UpdateBlogPostDto } from './dto/update-blog-post.dto';
